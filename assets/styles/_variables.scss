@@ -1,0 +1,24 @@
+:root {
+    // Colores principales
+    --color-background: #000000;
+    --color-background-alt: #1A1A1A;
+    --color-text: #FFFFFF;
+    --color-accent: #00FF00;
+    --color-accent-2: #FF00FF;
+    --color-accent-3: #00A3FF;
+  
+    // Fuentes
+    --font-primary: 'IBM Plex Mono', monospace;
+    
+    // Animaciones
+    --transition-speed: 0.3s;
+    
+    // Efectos
+    --glow-effect: 0 0 10px;
+    --shadow-neon: 0 0 15px rgba(0, 255, 0, 0.5);
+    
+    // Breakpoints
+    --mobile: 576px;
+    --tablet: 768px;
+    --desktop: 1024px;
+  }
