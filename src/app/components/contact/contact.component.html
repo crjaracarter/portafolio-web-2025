@@ -1,0 +1,54 @@
+<section class="contact">
+    <div class="terminal-container">
+        <div class="terminal-header">
+            <div class="terminal-buttons">
+                <span></span><span></span><span></span>
+            </div>
+            <div class="terminal-title">~/contact</div>
+        </div>
+
+        <div class="terminal-body terminal-text">
+            <div class="connection-simulation" #connectionText>
+                <p>> Iniciando protocolo de conexión...</p>
+                <p>> Estableciendo canal seguro...</p>
+                <p>> Conexión establecida!</p>
+                <p>> Cargando datos de contacto...</p>
+            </div>
+
+            <div class="contact-content" [class.visible]="showContent">
+                <div class="ascii-art">
+                    <pre>
+
+                        ▄████████  ▄██████▄     ▄▄▄▄███▄▄▄▄      ▄████████ 
+                        ███    ███ ███    ███  ▄██▀▀▀███▀▀▀██▄   ███    ███ 
+                        ███    █▀  ███    ███  ███   ███   ███   ███    ███ 
+                        ███        ███    ███  ███   ███   ███   ███    ███ 
+                        ███        ███    ███  ███   ███   ███ ▀███████████ 
+                        ███    █▄  ███    ███  ███   ███   ███   ███    ███ 
+                        ███    ███ ███    ███  ███   ███   ███   ███    ███ 
+                        ████████▀   ▀██████▀    ▀█   ███   █▀    ███    █▀  
+                                                                                          
+                    </pre>
+                </div>
+
+                <div class="contact-message">
+                    <p class="typing-text" #typingText></p>
+                </div>
+
+                <div class="social-links">
+                    <a href="https://www.linkedin.com/in/cristian-jara-carter/" target="_blank" class="social-link linkedin">
+                        <i class="fab fa-linkedin"></i>
+                        <span>Conectar en LinkedIn</span>
+                        <div class="link-glitch"></div>
+                    </a>
+                    
+                    <a href="https://github.com/crjaracarter" target="_blank" class="social-link github">
+                        <i class="fab fa-github"></i>
+                        <span>Explorar GitHub</span>
+                        <div class="link-glitch"></div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

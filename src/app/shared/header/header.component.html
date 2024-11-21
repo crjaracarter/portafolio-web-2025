@@ -1,0 +1,28 @@
+<header class="header">
+  <nav class="nav">
+    <div class="logo">
+      <pre class="ascii-logo">
+        <!-- ______     ______     __    __     ______    
+        /\  ___\   /\  __ \   /\ "-./  \   /\  __ \   
+        \ \ \____  \ \ \/\ \  \ \ \-./\ \  \ \  __ \  
+         \ \_____\  \ \_____\  \ \_\ \ \_\  \ \_\ \_\ 
+          \/_____/   \/_____/   \/_/  \/_/   \/_/\/_/ 
+                                                               -->
+      </pre>
+    </div>
+
+    <ul class="nav-links">
+      <li>
+        <a
+          routerLink="/"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          >_home</a
+        >
+      </li>
+      <li><a routerLink="/about" routerLinkActive="active">_about</a></li>
+      <li><a routerLink="/projects" routerLinkActive="active">_projects</a></li>
+      <li><a routerLink="/contact" routerLinkActive="active">_contact</a></li>
+    </ul>
+  </nav>
+</header>

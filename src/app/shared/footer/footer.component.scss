@@ -1,0 +1,62 @@
+.footer {
+    background-color: var(--color-background-alt);
+    border-top: 2px solid var(--color-accent);
+    padding: 1.5rem;
+  }
+  
+  .footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .social-links {
+    display: flex;
+    gap: 1.5rem;
+  
+    .social-link {
+      color: var(--color-text);
+      font-size: 1.5rem;
+      transition: all 0.3s ease;
+  
+      &:hover {
+        color: var(--color-accent);
+        transform: translateY(-3px);
+      }
+    }
+  }
+  
+  .terminal-line {
+    font-family: 'IBM Plex Mono', monospace;
+    color: var(--color-text);
+  
+    .prompt {
+      color: var(--color-accent);
+    }
+  
+    .command {
+      margin-left: 0.5rem;
+    }
+  
+    .cursor {
+      display: inline-block;
+      width: 8px;
+      height: 1rem;
+      background-color: var(--color-accent);
+      margin-left: 0.5rem;
+      animation: blink 1s step-end infinite;
+    }
+  }
+  
+  @keyframes blink {
+    50% { opacity: 0; }
+  }
+  
+  @media (max-width: 768px) {
+    .footer-content {
+      text-align: center;
+    }
+  }

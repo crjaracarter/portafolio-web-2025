@@ -1,0 +1,141 @@
+// Importa fuentes desde Google Fonts
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+// Importa parciales con estilos base
+@import 'assets/styles/_variables';
+@import 'assets/styles/_mixins';
+@import 'assets/styles/_reset';
+
+// Estilos globales adicionales
+html {
+  box-sizing: border-box;
+  height: 100%;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body {
+  font-family: var(--font-primary);
+  background-color: var(--color-background);
+  color: var(--color-text);
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  overflow-x: hidden; // Previene scroll horizontal
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// Mejora el renderizado de texto
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  body {
+    -webkit-text-stroke: 0.25px rgba(0, 255, 0, 0.7);
+  }
+}
+
+// Estilos para scrollbar personalizados (opcional)
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-accent);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-accent-hover);
+}
+
+// Clases de utilidad globales
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  position: relative;
+  z-index: 1;
+}
+
+.hidden {
+  display: none !important;
+}
+
+// Clases para animaciones
+.fade-in {
+  animation: fadeIn 0.5s ease-in;
+}
+
+.typing-cursor {
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes blink {
+  from, to { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+// Clases para efectos de terminal
+.terminal-text {
+  font-family: 'IBM Plex Mono', monospace;
+  color: var(--color-text);
+  text-shadow: 0 0 5px var(--color-accent);
+}
+
+.glitch-text {
+  position: relative;
+  &::before,
+  &::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  &::before {
+    left: 2px;
+    text-shadow: -2px 0 var(--color-accent);
+    clip: rect(24px, 550px, 90px, 0);
+    animation: glitch-anim 3s infinite linear alternate-reverse;
+  }
+  &::after {
+    left: -2px;
+    text-shadow: -2px 0 var(--color-secondary);
+    clip: rect(85px, 550px, 140px, 0);
+    animation: glitch-anim 2s infinite linear alternate-reverse;
+  }
+}
+
+@keyframes glitch-anim {
+  0% {
+    clip: rect(24px, 550px, 90px, 0);
+  }
+  20% {
+    clip: rect(85px, 550px, 140px, 0);
+  }
+  40% {
+    clip: rect(66px, 550px, 114px, 0);
+  }
+  60% {
+    clip: rect(92px, 550px, 135px, 0);
+  }
+  80% {
+    clip: rect(58px, 550px, 122px, 0);
+  }
+  100% {
+    clip: rect(79px, 550px, 94px, 0);
+  }
+}
