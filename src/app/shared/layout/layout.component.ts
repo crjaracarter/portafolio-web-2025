@@ -10,19 +10,42 @@ import { RouterModule } from '@angular/router';
 import { HeaderComponent } from '../header/header.component';
 import { FooterComponent } from '../footer/footer.component';
 import { gsap } from 'gsap';
+import { routeAnimations } from '../../shared/animations/route-animations';
+import { RouterOutlet } from '@angular/router';
+import {
+  trigger,
+  transition,
+  style,
+  animate,
+  query,
+  group,
+} from '@angular/animations';
 
 @Component({
   selector: 'app-layout',
   standalone: true,
-  imports: [CommonModule, RouterModule, HeaderComponent, FooterComponent],
+  imports: [
+    CommonModule,
+    RouterModule,
+    RouterOutlet, // Añadir RouterOutlet explícitamente
+    HeaderComponent,
+    FooterComponent,
+  ],
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.scss'],
+  animations: [routeAnimations],
 })
 export class LayoutComponent implements OnInit, OnDestroy {
   private animationFrameId?: number;
   private resizeHandler?: () => void;
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+
+  getRouteState(outlet: RouterOutlet) {
+    return outlet && outlet.activatedRouteData ? outlet.activatedRouteData['animation'] : 'none';
+  }
+
+  
 
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
@@ -70,10 +93,10 @@ export class LayoutComponent implements OnInit, OnDestroy {
     const drops: number[] = new Array(columns).fill(1);
 
     const draw = () => {
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.05)'; 
       ctx.fillRect(0, 0, width, height);
 
-      ctx.fillStyle = 'rgba(0, 255, 0, 0.7)'; // Verde más visible
+      ctx.fillStyle = 'rgba(0, 255, 0, 0.9)'; // Verde más visible
       ctx.font = `${fontSize}px "IBM Plex Mono", monospace`;
 
       for (let i = 0; i < drops.length; i++) {
@@ -96,7 +119,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
       setTimeout(() => {
         draw();
         this.animationFrameId = requestAnimationFrame(animate);
-      }, 5); // Puedes ajustar este valor (en milisegundos) - mayor número = más lento
+      }, 3); // Puedes ajustar este valor (en milisegundos) - mayor número = más lento
     };
     animate();
 

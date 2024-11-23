@@ -1,3 +1,5 @@
+// src\styles.scss
+
 // Importa fuentes desde Google Fonts
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap');
 
@@ -137,5 +139,63 @@ body {
   }
   100% {
     clip: rect(79px, 550px, 94px, 0);
+  }
+}
+
+// ANIAMCIONES AL TRANSICIONAR ELEMENTOS
+
+.animated-element {
+  opacity: 0;
+  
+  &.visible {
+    opacity: 1;
+    transition: all 0.3s ease;
+  }
+}
+// Efecto glitch
+@keyframes glitch {
+  0% {
+    clip-path: polygon(0 2%, 100% 2%, 100% 5%, 0 5%);
+    transform: translate(-2px);
+  }
+  2% {
+    clip-path: polygon(0 15%, 100% 15%, 100% 15%, 0 15%);
+    transform: translate(2px);
+  }
+  4% {
+    clip-path: polygon(0 10%, 100% 10%, 100% 20%, 0 20%);
+    transform: translate(-1px);
+  }
+  6% {
+    clip-path: polygon(0 1%, 100% 1%, 100% 2%, 0 2%);
+    transform: translate(1px);
+  }
+  8% {
+    clip-path: polygon(0 33%, 100% 33%, 100% 33%, 0 33%);
+    transform: translate(2px);
+  }
+  10% {
+    clip-path: polygon(0 44%, 100% 44%, 100% 44%, 0 44%);
+    transform: translate(0);
+  }
+  12% {
+    clip-path: polygon(0 50%, 100% 50%, 100% 20%, 0 20%);
+    transform: translate(-2px);
+  }
+  14% {
+    clip-path: polygon(0 70%, 100% 70%, 100% 70%, 0 70%);
+    transform: translate(2px);
+  }
+  16% {
+    clip-path: polygon(0 80%, 100% 80%, 100% 80%, 0 80%);
+    transform: translate(-1px);
+  }
+  18% {
+    clip-path: polygon(0 50%, 100% 50%, 100% 55%, 0 55%);
+    transform: translate(1px);
+  }
+  20% {
+    clip-path: polygon(0 70%, 100% 70%, 100% 80%, 0 80%);
+    transform: translate(0);
   }
 }

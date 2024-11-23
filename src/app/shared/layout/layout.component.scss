@@ -1,51 +1,100 @@
 :host {
-    display: block;
-    min-height: 100vh;
-  }
-  
-  .layout-container {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    position: relative;
-    color: var(--color-text);
-    font-family: 'IBM Plex Mono', monospace;
-  }
-  
-  .main-content {
-    flex: 1;
-    position: relative;
-    padding: 2rem;
-    z-index: 1; // Asegura que el contenido esté por encima del canvas
-    background-color: rgba(0, 0, 0, 0.8); // Fondo semi-transparente
-  }
-  
-  .glitch-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    pointer-events: none;
-    background: linear-gradient(
-      rgba(255, 0, 255, 0.03),
-      rgba(0, 255, 0, 0.02)
-    );
-    z-index: 2;
-  }
-  
-  .matrix-background {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 0;
-    pointer-events: none;
-    opacity: 100;
-  }
+  display: block;
+  min-height: 100vh;
+}
 
-  // Asegúrate de que el header y footer estén por encima
+.layout-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  position: relative;
+  color: var(--color-text);
+  font-family: "IBM Plex Mono", monospace;
+  overflow-x: hidden;
+}
+
+.main-content {
+  flex: 1;
+  position: relative;
+  padding: 2rem;
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.8);
+  //min-height: calc(100vh - 120px);  Ajusta este valor según el tamaño de tu header y footer
+  
+  // Asegúrate de que los componentes hijos ocupen todo el espacio
+  > * {
+    width: 100%;
+    min-height: 100%;
+  }
+}
+
+// Añadir esto para las animaciones de ruta
+.main-content > * {
+  display: block;
+  animation: pageTransition 0.4s ease-out;
+}
+
+// Contenedor para efectos de animación
+.main-content::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0;
+  background: linear-gradient(
+    45deg,
+    rgba(0, 255, 0, 0.2),
+    rgba(255, 0, 255, 0.2)
+  );
+  z-index: 2;
+  transition: opacity 0.3s ease;
+}
+
+.main-content.animating::before {
+  opacity: 1;
+}
+
+.glitch-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    rgba(255, 0, 255, 0.01), // Reduce estos valores
+    rgba(0, 255, 0, 0.01)
+  );
+  z-index: 2;
+}
+
+// Añadir efecto de escaneo
+.glitch-overlay::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: rgba(0, 255, 0, 0.5);
+  animation: scanning 2s linear infinite;
+}
+
+.matrix-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 1;
+}
+
+// Asegúrate de que el header y footer estén por encima
 app-header {
   position: relative;
   z-index: 1;
@@ -56,9 +105,64 @@ app-footer {
   z-index: 1;
 }
 
-  // .matrix-background {
-  //   position: fixed;
-  //   top: 0;
-  //   left: 0;
-  //   z-index: -1;
-  // }
+// Animaciones de página
+
+// Animaciones
+@keyframes pageTransition {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+    filter: brightness(1.5) saturate(1.2);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: brightness(1) saturate(1);
+  }
+}
+
+@keyframes scanning {
+  0% {
+    transform: translateY(-100vh);
+  }
+  100% {
+    transform: translateY(100vh);
+  }
+}
+
+// Efecto glitch para transiciones
+@keyframes glitchEffect {
+  0% {
+    clip-path: polygon(0 2%, 100% 2%, 100% 5%, 0 5%);
+    transform: translate(-2px);
+  }
+  20% {
+    clip-path: polygon(0 15%, 100% 15%, 100% 15%, 0 15%);
+    transform: translate(2px);
+  }
+  40% {
+    clip-path: polygon(0 10%, 100% 10%, 100% 20%, 0 20%);
+    transform: translate(-1px);
+  }
+  60% {
+    clip-path: polygon(0 1%, 100% 1%, 100% 2%, 0 2%);
+    transform: translate(1px);
+  }
+  80% {
+    clip-path: polygon(0 33%, 100% 33%, 100% 33%, 0 33%);
+    transform: translate(0);
+  }
+  100% {
+    clip-path: polygon(0 44%, 100% 44%, 100% 44%, 0 44%);
+    transform: translate(0);
+  }
+}
+
+// Clases de utilidad para animaciones
+.page-enter {
+  animation: pageTransition 0.4s ease-out;
+}
+
+.glitch-animate {
+  animation: glitchEffect 0.2s steps(2) infinite;
+}

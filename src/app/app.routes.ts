@@ -5,9 +5,17 @@ import { ProjectsComponent } from './components/projects/projects.component';
 import { ContactComponent } from './components/contact/contact.component';
 
 export const routes: Routes = [
- { path: '', component: HomeComponent },
- { path: 'about', component: AboutComponent },
- { path: 'projects', component: ProjectsComponent },
- { path: 'contact', component: ContactComponent },
- { path: '**', redirectTo: '' }
+  { path: '', component: HomeComponent,
+    data: { animation: 'home' }
+   },
+  { path: 'about', component: AboutComponent,
+    data: { animation: 'about' }
+   },
+  { path: 'projects', component: ProjectsComponent,
+    data: { animation: 'projects' }
+   },
+  { path: 'contact', component: ContactComponent,
+    data: { animation: 'contact' }
+   },
+  { path: '**', redirectTo: '' },
 ];
