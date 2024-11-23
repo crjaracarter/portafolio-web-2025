@@ -29,6 +29,10 @@ export function app(): express.Express {
   server.get('**', (req, res, next) => {
     const { protocol, originalUrl, baseUrl, headers } = req;
 
+    if (!originalUrl || originalUrl === '/favicon.ico') {
+      return next();
+    }
+
     commonEngine
       .render({
         bootstrap,
@@ -37,8 +41,15 @@ export function app(): express.Express {
         publicPath: browserDistFolder,
         providers: [{ provide: APP_BASE_HREF, useValue: baseUrl }],
       })
-      .then((html) => res.send(html))
-      .catch((err) => next(err));
+      .then((html) => {
+        // Agregar headers de caché si es necesario
+        res.set('Cache-Control', 'public, max-age=300, s-maxage=600');
+        res.send(html);
+      })
+      .catch((err) => {
+        console.error(`Error al renderizar la ruta ${originalUrl}:`, err);
+        next(err);
+      });
   });
 
   return server;
@@ -49,6 +60,12 @@ function run(): void {
 
   // Start up the Node server
   const server = app();
+
+  server.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
+    console.error('Error en el servidor:', err);
+    res.status(500).send('Error interno del servidor');
+  });
+
   server.listen(port, () => {
     console.log(`Node Express server listening on http://localhost:${port}`);
   });

@@ -1,16 +1,19 @@
 // cursor.component.ts
-import { Component, OnInit, HostListener } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit, HostListener, Inject, PLATFORM_ID } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { DOCUMENT } from '@angular/common';
 import gsap from 'gsap';
 
 @Component({
   selector: 'app-cursor',
   standalone: true,
   template: `
-    <div class="cursor">
-      <div class="cursor-dot"></div>
-      <div class="cursor-outline"></div>
-    </div>
+    @if (isBrowser) {
+      <div class="cursor">
+        <div class="cursor-dot"></div>
+        <div class="cursor-outline"></div>
+      </div>
+    }
   `,
   styles: [
     `
@@ -24,7 +27,7 @@ import gsap from 'gsap';
         position: fixed;
         width: 8px;
         height: 8px;
-        background-color: #00ff00; // Verde neón de tu paleta
+        background-color: #00ff00;
         border-radius: 50%;
         transform: translate(-50%, -50%);
       }
@@ -39,7 +42,7 @@ import gsap from 'gsap';
         transition: all 0.2s ease-out;
       }
 
-      cursor-outline.cursor-hover {
+      .cursor-outline.cursor-hover {
         .cursor-dot {
           transform: translate(-50%, -50%) scale(2);
           background-color: #ff00ff;
@@ -52,26 +55,45 @@ import gsap from 'gsap';
     `,
   ],
   styleUrls: ['./cursor.component.scss'],
+  imports: [CommonModule],
 })
 export class CursorComponent implements OnInit {
+  isBrowser: boolean;
   private cursor = { x: 0, y: 0 };
+
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
+    @Inject(DOCUMENT) private document: Document
+  ) {
+    this.isBrowser = isPlatformBrowser(this.platformId);
+  }
 
   @HostListener('document:mousemove', ['$event'])
   onMouseMove(event: MouseEvent) {
-    gsap.to('.cursor-dot', {
-      x: event.clientX,
-      y: event.clientY,
-      duration: 0.1,
-    });
+    if (this.isBrowser) {
+      gsap.to('.cursor-dot', {
+        x: event.clientX,
+        y: event.clientY,
+        duration: 0.1,
+      });
 
-    gsap.to('.cursor-outline', {
-      x: event.clientX,
-      y: event.clientY,
-      duration: 0.15,
-    });
+      gsap.to('.cursor-outline', {
+        x: event.clientX,
+        y: event.clientY,
+        duration: 0.15,
+      });
+    }
   }
+
   ngOnInit(): void {
-    // Ocultar el cursor original
-    document.body.style.cursor = 'none';
+    if (this.isBrowser) {
+      this.document.body.style.cursor = 'none';
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this.isBrowser) {
+      this.document.body.style.cursor = 'auto';
+    }
   }
 }
