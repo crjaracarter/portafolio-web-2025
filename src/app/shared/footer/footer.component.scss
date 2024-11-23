@@ -76,6 +76,9 @@
     width: 100%;
     max-width: 660px;
     margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center; // Centra los elementos hijos
   }
 
   .music-title {
@@ -83,10 +86,18 @@
     font-size: 1.2rem;
     margin-bottom: 1rem;
     color: var(--color-text);
+    text-align: center; // Centra el texto
+    width: 100%; // Asegura que tome todo el ancho disponible
     
     .prompt {
       color: var(--color-accent);
       margin-right: 0.5rem;
+    }
+    // Añadimos un efecto sutil de hover
+    &:hover {
+      .prompt {
+        animation: pulsePrompt 1.5s infinite;
+      }
     }
   }
 
@@ -127,6 +138,19 @@
     .player-wrapper {
       padding-bottom: 40%; // Ajuste para móviles
     }
+  }
+}
+
+// Animación sutil para el prompt
+@keyframes pulsePrompt {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
   }
 }
 

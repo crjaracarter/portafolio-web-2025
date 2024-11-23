@@ -20,6 +20,7 @@ import {
   query,
   group,
 } from '@angular/animations';
+import { CursorComponent } from '../../components/cursor/cursor.component';
 
 @Component({
   selector: 'app-layout',
@@ -30,6 +31,7 @@ import {
     RouterOutlet, // Añadir RouterOutlet explícitamente
     HeaderComponent,
     FooterComponent,
+    CursorComponent
   ],
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.scss'],
@@ -45,12 +47,28 @@ export class LayoutComponent implements OnInit, OnDestroy {
     return outlet && outlet.activatedRouteData ? outlet.activatedRouteData['animation'] : 'none';
   }
 
-  
+  private initCursorEffect(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      // Asegurarnos de que los elementos interactivos actualicen el cursor
+      const interactiveElements = document.querySelectorAll('a, button, [role="button"], .clickable');
+      
+      interactiveElements.forEach(element => {
+        element.addEventListener('mouseenter', () => {
+          document.querySelector('.cursor')?.classList.add('cursor-hover');
+        });
+        
+        element.addEventListener('mouseleave', () => {
+          document.querySelector('.cursor')?.classList.remove('cursor-hover');
+        });
+      });
+    }
+  }
 
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
       this.initMatrixBackground();
       this.initGlitchEffect();
+      this.initCursorEffect();
     }
   }
 

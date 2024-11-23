@@ -1,8 +1,12 @@
 <header class="header">
   <nav class="nav">
     <div class="logo">
-      <pre class="ascii-logo">
-        ¡Bienvenido! ヾ(≧▽≦*)o
+      <pre class="ascii-logo terminal-text">
+        $ ¡Bienvenido!
+        <span class="ip-display" [ngClass]="{'loading': loading}">
+        [user&#64;{{ loading ? 'locating...' : userIp }}~] 
+        </span>
+        ヾ(≧▽≦*)o
       </pre>
     </div>
 

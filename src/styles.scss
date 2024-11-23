@@ -16,6 +16,7 @@ html {
 
 *, *:before, *:after {
   box-sizing: inherit;
+  cursor: none !important;
 }
 
 body {
@@ -38,22 +39,27 @@ body {
   }
 }
 
-// Estilos para scrollbar personalizados (opcional)
+// Estilos para scrollbar - Webkit (Chrome, Safari, Edge)
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 12px; // Aumentado para mejor visibilidad
+  height: 12px; // Para scrollbars horizontales
 }
 
 ::-webkit-scrollbar-track {
   background: var(--color-background);
+  border-radius: 4px;
+  margin: 4px 0; // Añade un pequeño margen
 }
 
 ::-webkit-scrollbar-thumb {
   background: var(--color-accent);
-  border-radius: 4px;
-}
+  border: 3px solid var(--color-background); // Crea un borde
+  border-radius: 8px;
+  min-height: 40px; // Altura mínima del thumb
 
-::-webkit-scrollbar-thumb:hover {
-  background: var(--color-accent-hover);
+  &:hover {
+    background: var(--color-accent-hover);
+  }
 }
 
 // Clases de utilidad globales
@@ -93,7 +99,7 @@ body {
 .terminal-text {
   font-family: 'IBM Plex Mono', monospace;
   color: var(--color-text);
-  text-shadow: 0 0 5px var(--color-accent);
+  text-shadow: 0 0 10px var(--color-accent);
 }
 
 .glitch-text {
@@ -197,5 +203,21 @@ body {
   20% {
     clip-path: polygon(0 70%, 100% 70%, 100% 80%, 0 80%);
     transform: translate(0);
+  }
+}
+
+// Estilos específicos para elementos interactivos
+a, button, [role="button"], .clickable {
+  &:hover {
+    ~ .cursor {
+      .cursor-dot {
+        transform: translate(-50%, -50%) scale(2);
+        background-color: #FF00FF;
+      }
+      .cursor-outline {
+        transform: translate(-50%, -50%) scale(1.5);
+        border-color: #FF00FF;
+      }
+    }
   }
 }

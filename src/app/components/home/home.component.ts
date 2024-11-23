@@ -16,14 +16,13 @@ export class HomeComponent implements OnInit {
 
   private readonly welcomeText = 'Bienvenido a mi portafolio web!!!111...';
   private readonly asciiLogo = `
-  Alias
+  Alias: Coma
  ██████╗ ██████╗ ███╗   ███╗ █████╗ 
 ██╔════╝██╔═══██╗████╗ ████║██╔══██╗
 ██║     ██║   ██║██╔████╔██║███████║
 ██║     ██║   ██║██║╚██╔╝██║██╔══██║
 ╚██████╗╚██████╔╝██║ ╚═╝ ██║██║  ██║
  ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝  ╚═╝
-
 `;
 
 constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
