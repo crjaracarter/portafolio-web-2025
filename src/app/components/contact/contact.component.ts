@@ -21,7 +21,7 @@ export class ContactComponent implements OnInit, AfterViewInit {
   showContent = false;
 
   private readonly welcomeMessage =
-    '¡Hola! Estoy siempre interesado en colaborar en proyectos innovadores y conectar con otros profesionales. ¡Contáctame!';
+    '¡Hola! Estoy siempre interesado en colaborar en proyectos en mi tiempo libre y conectar con otros profesionales. ¡Contáctame!';
 
   ngOnInit(): void {
     // Removemos la llamada a simulateConnection de aquí

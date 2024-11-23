@@ -14,7 +14,7 @@ export class HomeComponent implements OnInit {
   @ViewChild('asciiArt') asciiArt!: ElementRef;
   @ViewChild('typedText') typedText!: ElementRef;
 
-  private readonly welcomeText = 'Bienvenido a mi portafolio!!!111...';
+  private readonly welcomeText = 'Bienvenido a mi portafolio web!!!111...';
   private readonly asciiLogo = `
   Alias
  ██████╗ ██████╗ ███╗   ███╗ █████╗ 
