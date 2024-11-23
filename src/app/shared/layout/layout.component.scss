@@ -19,7 +19,7 @@
   padding: 2rem;
   z-index: 1;
   background-color: rgba(0, 0, 0, 0.8);
-  //min-height: calc(100vh - 120px);  Ajusta este valor según el tamaño de tu header y footer
+  min-height: calc(100vh - 120px);  Ajusta este valor según el tamaño de tu header y footer
   
   // Asegúrate de que los componentes hijos ocupen todo el espacio
   > * {
