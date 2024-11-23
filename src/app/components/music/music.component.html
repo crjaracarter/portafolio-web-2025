@@ -1,0 +1,108 @@
+<div class="matrix-player" [class.maximized]="isMaximized()" [class.minimized]="isMinimized()">
+  <!-- Barra de título con drag & drop -->
+  <div class="player-header" (mousedown)="startDragging($event)">
+    <div class="title">▶ Mi Selección Personal | ¡Navega mientras escuchas! - Music Player</div>
+    <div class="window-controls">
+      <span class="control" (click)="toggleMinimize()">_</span>
+      <span class="control" (click)="toggleMaximize()">□</span>
+      <span class="control">×</span>
+    </div>
+  </div>
+
+  <!-- Menú -->
+  <div class="menu-bar">
+    <div class="menu-item">> Archivo</div>
+    <div class="menu-item">> Editar</div>
+    <div class="menu-item">> Ver</div>
+    <div class="menu-item">> Ayuda</div>
+  </div>
+
+  <div class="player-content">
+    <!-- Lista de reproducción con scroll -->
+    <div class="playlist-panel">
+      <div class="panel-title">> PLAYLIST_</div>
+      <div class="track-list-container">
+        <div class="track-list" [class.scrolling]="shouldScroll">
+          @for (song of playlist; track song.id) {
+          <div class="track-item" [class.active]="currentSongSignal()?.id === song.id" (click)="playSong(song)">
+            <span class="track-icon">
+              {{ currentSongSignal()?.id === song.id && isPlayingSignal() ? '▶' : '♪' }}
+            </span>
+            <div class="track-info">
+              <div class="track-name" [class.scrolling-text]="shouldScroll(song.title)">
+                > {{ song.title }}
+              </div>
+              <div class="track-artist">$ {{ song.artist }}</div>
+            </div>
+            <div class="track-duration">{{ formatTime(song.duration) }}</div>
+          </div>
+          }
+        </div>
+      </div>
+    </div>
+
+    <!-- Panel del reproductor -->
+    <div class="player-panel">
+      <!-- Visualizador -->
+      <div class="visualizer-container">
+        <canvas #visualizerCanvas class="visualizer-canvas"></canvas> 
+        <div class="now-playing" *ngIf="currentSongSignal() as song">
+          <div class="song-title" [class.scrolling-text]="shouldScroll(song.title)">
+            > {{ song.title }}
+          </div>
+          <div class="song-artist">$ {{ song.artist }}</div>
+        </div>
+      </div>
+
+      <!-- Controles -->
+      <div class="controls-container">
+        <!-- Barra de progreso -->
+        <div class="time-display">
+          <span>{{ formatTime(currentTimeSignal()) }}</span>
+          <div class="progress-bar" (click)="seekTrack($event)" (mousedown)="$event.stopPropagation()">
+            <div class="progress-fill" [ngStyle]="{
+                   'width': calculateProgress() + '%'
+                 }">
+            </div>
+          </div>
+          <span>{{ formatTime(durationSignal()) }}</span>
+        </div>
+
+        <!-- Botones de control -->
+        <div class="control-buttons">
+          <button class="ctrl-btn" (click)="playPrevious()" title="Anterior">⏮</button>
+          <button class="ctrl-btn play-pause" (click)="togglePlay()" title="Reproducir/Pausar">
+            {{ isPlayingSignal() ? '⏸' : '▶' }}
+          </button>
+          <button class="ctrl-btn" (click)="playNext()" title="Siguiente">⏭</button>
+          <button class="ctrl-btn" [class.active]="isRepeatActive()" (click)="toggleRepeat()" title="Repetir">⟲</button>
+          <button class="ctrl-btn" [class.active]="isShuffleActive()" (click)="toggleShuffle()"
+            title="Aleatorio">⤭</button>
+        </div>
+
+        <!-- Control de volumen -->
+        <div class="volume-control">
+          <span class="volume-icon" (click)="toggleMute()">
+            {{ volume() > 0 ? '🔊' : '🔇' }}
+          </span>
+          <div class="volume-slider-container">
+            <input type="range" class="volume-slider" [value]="volume()" (input)="handleVolumeChange($event)" min="0"
+              max="100" step="1">
+            <div class="volume-fill" [style.width]="volume() + '%'"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Barra de estado -->
+  <div class="status-bar">
+    <span class="status-icon">⚡</span>
+    <span class="status-text">
+      {{ currentSongSignal()
+      ? 'Reproduciendo: ' + currentSongSignal()?.title + ' - ' + currentSongSignal()?.artist
+      : 'Listo para reproducir...' }}
+    </span>
+    <span class="time">{{ currentTime | date:'HH:mm:ss' }}</span>
+  </div>
+</div>

@@ -1,0 +1,452 @@
+
+// Variables específicas
+$matrix-green: #00ff00;
+$matrix-dark-green: #00aa00;
+$matrix-bg: #000000;
+$matrix-dark-bg: #001100;
+$matrix-darker-bg: #000800;
+$matrix-hover-bg: #001600;
+$matrix-active-bg: #002200;
+$matrix-border: $matrix-green;
+$matrix-shadow: rgba(0, 255, 0, 0.3);
+$progress-bg: #003300;
+
+
+// Mixins
+@mixin matrix-border {
+  border: 1px solid $matrix-border;
+}
+
+@mixin matrix-glow {
+  box-shadow: 0 0 10px $matrix-shadow;
+}
+
+@mixin scrollbar {
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $matrix-green;
+    border-radius: 3px;
+  }
+}
+
+.matrix-player {
+  width: 90%;
+  max-width: 1000px;
+  height: 600px; // Altura fija para el reproductor
+  margin: 2rem auto;
+  display: flex;
+  flex-direction: column;
+  background: $matrix-bg;
+  @include matrix-border;
+  @include matrix-glow;
+  font-family: 'Courier New', monospace;
+  color: $matrix-green;
+
+  // Header
+  .player-header {
+    background: $matrix-dark-bg;
+    padding: 0.5rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid $matrix-border;
+    cursor: move;
+
+    .title {
+      font-weight: bold;
+      user-select: none;
+    }
+
+    .window-controls {
+      display: flex;
+      gap: 0.5rem;
+
+      .control {
+        cursor: pointer;
+        padding: 0 0.5rem;
+        transition: color 0.2s ease;
+
+        &:hover {
+          color: #ffffff;
+        }
+      }
+    }
+  }
+
+  // Menu Bar
+  .menu-bar {
+    display: flex;
+    gap: 1rem;
+    padding: 0.5rem;
+    background: $matrix-dark-bg;
+    border-bottom: 1px solid $matrix-border;
+
+    .menu-item {
+      cursor: pointer;
+      transition: color 0.2s ease;
+      user-select: none;
+
+      &:hover {
+        color: #ffffff;
+      }
+    }
+  }
+  // Main Content
+  .player-content {
+    display: flex;
+    min-height: 400px;
+    min-height: 0; // Importante para que el scroll funcione
+    height: calc(100% - 100px);
+    @include scrollbar;
+
+    // Playlist Panel
+    .playlist-panel {
+      width: 300px;
+      flex-shrink: 0;
+      border-right: 1px solid $matrix-border;
+      background: $matrix-darker-bg;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      max-height: 100%;
+
+      .panel-title {
+        padding: 0.5rem;
+        background: $matrix-dark-bg;
+        border-bottom: 1px solid $matrix-border;
+        user-select: none;
+        flex-shrink: 0;
+      }
+
+      .track-list-container {
+        flex: 1;
+        overflow: hidden;
+      }
+
+      .track-list {
+        height: 100%;
+        flex: 1;
+        overflow-y: auto;
+        overflow-x: hidden;
+        @include scrollbar;
+        padding-right: 5px;
+
+        .track-item {
+          padding: 0.8rem;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          gap: 0.8rem;
+          transition: background-color 0.2s ease;
+
+          &:hover {
+            background: $matrix-hover-bg;
+          }
+
+          &.active {
+            background: $matrix-active-bg;
+            
+            .track-icon {
+              color: $matrix-green;
+              animation: blink 1s step-end infinite;
+            }
+          }
+
+          .track-icon {
+            font-size: 1.2em;
+            min-width: 20px;
+          }
+
+          .track-info {
+            flex: 1;
+            overflow: hidden;
+
+            .track-name {
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
+
+            .track-artist {
+              font-size: 0.9em;
+              color: $matrix-dark-green;
+              margin-top: 0.2rem;
+            }
+          }
+
+          .track-duration {
+            font-size: 0.9em;
+            color: $matrix-dark-green;
+            min-width: 45px;
+            text-align: right;
+          }
+        }
+      }
+    }
+
+    // Player Panel
+    .player-panel {
+      flex: 1;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      padding: 1rem;
+      overflow: hidden;
+
+      // Visualizer
+      .visualizer-container {
+        height: 200px;
+        @include matrix-border;
+        margin-bottom: 1rem;
+        position: relative;
+        overflow: hidden;
+
+        canvas.visualizer-canvas {
+          width: 100%;
+          height: 100%;
+          filter: blur(3px);
+        }
+
+        .matrix-code {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: linear-gradient(
+            180deg,
+            transparent 0%,
+            rgba(0, 255, 0, 0.1) 50%,
+            transparent 100%
+          );
+          animation: matrix 20s linear infinite;
+          
+        }
+
+        .now-playing {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          text-align: center;
+          text-shadow: 0 0 10px $matrix-green;
+          width: 90%;
+          
+
+          .song-title {
+            font-size: 1.5em;
+            margin-bottom: 0.5rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: white 
+          }
+
+          .song-artist {
+            color: $matrix-dark-green;
+          }
+        }
+      }
+
+      // Controls
+      .controls-container {
+        .time-display {
+          display: flex;
+          align-items: center;
+          gap: 1rem;
+          margin-bottom: 1rem;
+          user-select: none;
+
+          .progress-bar {
+            flex: 1;
+            height: 8px; // Aumentado para mejor visibilidad
+            background: $progress-bg;
+            position: relative;
+            cursor: pointer;
+            border-radius: 4px;
+            overflow: hidden;
+
+            &::before {
+              content: '';
+              position: absolute;
+              top: -8px;
+              left: 0;
+              right: 0;
+              bottom: -8px;
+              cursor: pointer;
+            }
+
+            &:hover .progress-fill {
+              filter: brightness(1.2);
+            }
+
+            .progress-fill {
+              position: absolute;
+              left: 0;
+              top: 0;
+              height: 100%;
+              width: var(--progress, 0%);
+              background: $matrix-green;
+              border-radius: 4px;
+              transition: width 0.1s linear;
+              pointer-events: none;
+            }
+          }
+        }
+
+        .control-buttons {
+          display: flex;
+          justify-content: center;
+          gap: 1rem;
+          margin-bottom: 1rem;
+
+          .ctrl-btn {
+            background: transparent;
+            @include matrix-border;
+            color: $matrix-green;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            font-size: 1.2em;
+            transition: all 0.2s ease;
+            min-width: 45px;
+
+            &:hover {
+              background: $matrix-active-bg;
+              @include matrix-glow;
+            }
+
+            &.active {
+              background: $matrix-active-bg;
+              @include matrix-glow;
+            }
+
+            &.play-pause {
+              font-size: 1.5em;
+            }
+          }
+        }
+
+        .volume-control {
+          display: flex;
+          align-items: center;
+          gap: 1rem;
+
+          .volume-icon {
+            cursor: pointer;
+            user-select: none;
+            
+            &:hover {
+              color: #ffffff;
+            }
+          }
+
+          .volume-slider-container {
+            flex: 1;
+            position: relative;
+            height: 20px;
+            display: flex;
+            align-items: center;
+
+            input[type="range"] {
+              -webkit-appearance: none;
+              width: 100%;
+              height: 4px;
+              background: $progress-bg;
+              border-radius: 2px;
+              outline: none;
+              
+              &::-webkit-slider-thumb {
+                -webkit-appearance: none;
+                width: 12px;
+                height: 12px;
+                background: $matrix-green;
+                border-radius: 50%;
+                cursor: pointer;
+                transition: transform 0.2s;
+                
+                &:hover {
+                  transform: scale(1.2);
+                }
+              }
+            }
+
+            .volume-fill {
+              position: absolute;
+              height: 4px;
+              background: $matrix-green;
+              border-radius: 2px;
+              pointer-events: none;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // Status Bar
+  .status-bar {
+    padding: 0.5rem;
+    border-top: 1px solid $matrix-border;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: $matrix-dark-bg;
+    user-select: none;
+
+    .status-icon {
+      font-size: 1.2em;
+    }
+
+    .time {
+      margin-left: auto;
+      color: $matrix-dark-green;
+    }
+  }
+}
+
+// Animations
+@keyframes matrix {
+  from { background-position: 0 0; }
+  to { background-position: 0 200px; }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes scrollText {
+  from { transform: translateX(0); }
+  to { transform: translateX(-100%); }
+}
+
+// Media Queries
+@media (max-width: 768px) {
+  .matrix-player {
+    width: 95%;
+    height: 100vh; // Altura completa en móvil
+    margin: 0 auto;
+
+    .player-content {
+      flex-direction: column;
+
+      .playlist-panel {
+        width: 100%;
+        height: 200px; // Altura fija en móvil
+        border-right: none;
+        border-bottom: 1px solid $matrix-border;
+
+        .track-list {
+          height: calc(100% - 30px); // Resta la altura del título
+        }
+      }
+    }
+  }
+}

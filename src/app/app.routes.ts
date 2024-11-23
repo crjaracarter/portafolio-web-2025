@@ -3,7 +3,7 @@ import { HomeComponent } from './components/home/home.component';
 import { AboutComponent } from './components/about/about.component';
 import { ProjectsComponent } from './components/projects/projects.component';
 import { ContactComponent } from './components/contact/contact.component';
-
+import { MusicComponent } from './components/music/music.component';
 export const routes: Routes = [
   { path: '', component: HomeComponent,
     data: { animation: 'home' }
@@ -17,5 +17,11 @@ export const routes: Routes = [
   { path: 'contact', component: ContactComponent,
     data: { animation: 'contact' }
    },
+   { 
+    path: 'music', 
+    component: MusicComponent,
+    data: { animation: 'music' }
+  },
   { path: '**', redirectTo: '' },
+
 ];
