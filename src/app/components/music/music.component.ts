@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef, inject, AfterViewInit, signal } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef, inject, AfterViewInit, signal, ViewEncapsulation } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { AudioService } from '../../services/audio/audio.service';
 import { Song } from '../../models/song.interface';
@@ -10,7 +10,8 @@ import { catchError, takeUntil } from 'rxjs/operators';
   standalone: true,
   imports: [CommonModule, DatePipe],
   templateUrl: './music.component.html',
-  styleUrls: ['./music.component.scss']
+  styleUrls: ['./music.component.scss'],
+  encapsulation: ViewEncapsulation.ShadowDom
 })
 export class MusicComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('visualizerCanvas') visualizerCanvas!: ElementRef<HTMLCanvasElement>;
