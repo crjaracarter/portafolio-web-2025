@@ -11,8 +11,8 @@
     "serve:ssr:portfolio-cyberpunk": "node dist/portfolio-cyberpunk/server/server.mjs",
     "build:ssr": "ng build && ng run portfolio-cyberpunk:server",
     "prerender": "ng run portfolio-cyberpunk:prerender",
-    "build:prod": "ng build --configuration production --aot --optimization=true",
-    "build:netlify": "npm run build:prod"
+    "build:prod": "ng build --configuration production",
+    "build:netlify": "npm install --force && ng build --configuration production"
   },
   "private": true,
   "dependencies": {
